@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>PineOak</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+  <link rel="stylesheet" href="index.css">
+  <style>
+    body {
+      font-family: 'Avenir', Helvetica, Arial, sans-serif;
+      font-size: 1em;
+    }
+    html {
+      background-color: var(--acorn-green-M1);
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <visualizer></visualizer>
+  </div>
+  <!-- built files will be auto injected -->
+  <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+   -->
+    <!-- development version, includes helpful console warnings -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <!-- production version, optimized for size and speed
+      <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
+  
+  <script>
+    var $j = jQuery.noConflict();
+    $j(document).ready(function () {
+    });
+  </script>
+
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+
+  <script src="js/svgDimensions.js"></script>
+  <script src="js/wordsInSvg.js"></script>
+  <script src="js/paths.js"></script>
+  <script src="js/deprels.js"></script>
+  <script src="js/conll.js"></script>
+  <script src="js/conllToJson.js"></script>
+  <script src="js/drawD3.js"></script>
+  <!-- <script src="js/textToConll.js"></script> -->
+  
+  <script src="js/visualizer.js"></script>
+  <script src="index.js"></script>
+</body>
+
+</html>
