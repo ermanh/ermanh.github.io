@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/png" href="./favicons/16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="./favicons/32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="./favicons/96x96.png" sizes="96x96">
+    <title>Regular Expression Guide</title>
+    <style>
+        body {
+            font-family: Arial, monospace; 
+            margin: 25px; color: #000000; 
+            background-color: #ffffff;
+        }
+        h2 { color: #4682b4; }
+        span { 
+            color: #ff0000; 
+            background-color: #fcdad8; 
+        }
+        table {
+            border-collapse: collapse; 
+            margin: 25px; 
+            border: 1px solid #b0c4de;
+        }
+        th { color: #384a73; }
+        th, td { 
+            padding: 8px 15px; 
+            max-width: 245px; 
+            border: 1px solid #b0c4de; }
+        .category { color: #4682b4; }
+        .center { text-align: center; }
+        .regex { 
+            font-family: Courier, "Roboto Mono", monospace; 
+            font-size: 1em; color: #000000 !important; 
+            background-color: #ffffff !important; }
+        text { background-color: #85ebe1; }
+    </style>
+</head>
+<body>
+    <h2>Regular Expression Guide</h2>
+    <p>
+        A regular expression (regex) is a composable search pattern for 
+        matching sequences of characters in a string. You can use 
+        metacharacters to specify conditions for individual characters and sequences. 
+        This guide introduces some basic metacharacters.
+    </p>
+    <p>
+        <b>Note:</b> You can search online to learn more about regexes. This web tool uses regexes as implemented in JavaScript.
+    </p>
+    <table>
+        <tr>
+            <th>Metacharacter</th>
+            <th>Definition/Usage</th>
+            <th style="min-width: 120px;">Sample Regex</th>
+            <th>Matched Substring</th>
+        </tr>
+        <tr>
+            <td colspan="4" class="category"><b>Character sets</b></td>
+        </tr>
+        <tr>
+            <td class="regex center">\d</td>
+            <td>Any digit (0-9)</td>
+            <td class="regex">\d days</td>
+            <td>I rested for <span>3 days</span>.</td>
+        </tr>
+        <tr>
+            <td class="regex center">\w</td>
+            <td>Any "word" character: letters (A-Z, a-z), digits (0-9), underscore (_)</td>
+            <td class="regex">\w\w</td>
+            <td><span>He</span> <span>ha</span>s <span>wo</span>n.</td>
+        </tr>
+        <tr>
+            <td class="regex center">[<text>&nbsp;</text>]</td>
+            <td>Specify a character set</td>
+            <td>
+                &bull; <span class="regex">[eo]mit</span><br>
+                &bull; <span class="regex">letter [A-Z]</span>
+            </td>
+            <td>
+                &bull; <span>emit</span>, <span>omit</span>, transmit<br>
+                &bull; the <span>letter A</span>, the letter a
+            </td>
+        </tr>
+        <tr>
+            <td class="regex center">[^<text>&nbsp;</text>]</td>
+            <td>Specify characters to exclude</td>
+            <td>
+                <span class="regex">[^eo]mit</span><br>
+            </td>
+            <td>
+                emit omit tran<span>smit</span>
+            </td>
+        </tr>
+        <tr>
+            <td class="regex center">.</td>
+            <td>Any character except the newline character (\n)</td>
+            <td class="regex">Boeing.\w</td>
+            <td>
+                &bull; <span>Boeing A</span>23<br>
+                &bull; <span>Boeing-A</span>23<br>
+                &bull; <span>BoeingA2</span>3
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4" class="category"><b>Boundaries</b></td>
+        </tr>
+        <tr>
+            <td class="regex center">\b</td>
+            <td>Boundary between a \w character and a non-\w character (or start/end of string)</td>
+            <td class="regex">\b\w\w\b</td>
+            <td>She ate <span>an</span> apple.</td>
+        </tr>
+        <tr>
+            <td class="regex center">^</td>
+            <td>Start of string</td>
+            <td class="regex">^good</td>
+            <td><span>good</span> good good</td>
+        </tr>
+        <tr>
+            <td class="regex center">$</td>
+            <td>End of string</td>
+            <td class="regex">good$</td>
+            <td>good good <span>good</span></td>
+        </tr>
+        <tr>
+            <td colspan="4" class="category"><b>Quantifiers</b></td>
+        </tr>
+        <tr>
+            <td class="regex center"><text>&nbsp;</text>?</td>
+            <td>0 or 1</td>
+            <td class="regex">trees?</td>
+            <td>one <span>tree</span>, two <span>trees</span></td>
+        </tr>
+        <tr>
+            <td class="regex center"><text>&nbsp;</text>+</td>
+            <td>1 or more</td>
+            <td class="regex">[a-z]+</td>
+            <td>I <span>donated</span> <span>to</span> UNICEF <span>today</span>.</td>
+        </tr>
+        <tr>
+            <td class="regex center"><text>&nbsp;</text>*</td>
+            <td>0 or more</td>
+            <td class="regex">take.*away</td>
+            <td><span>takeaway</span>, <span>take the dog away</span></td>
+        </tr>
+        <tr>
+            <td class="regex center">{<text>&nbsp;</text>}</td>
+            <td>Specify a quantity or quantity range</td>
+            <td>
+                &bull; <span class="regex">[a-z]{3}</span><br>
+                &bull; <span class="regex">[a-z]{2,4}</span><br>
+                &bull; <span class="regex">[a-z]{2,}</span>
+            </td>
+            <td>
+                &bull; a, an, <span>the</span>, <span>thi</span>s, <span>the</span>se<br>
+                &bull; a, <span>an</span>, <span>the</span>, <span>this</span>, <span>thes</span>e<br>
+                &bull; a, <span>an</span>, <span>the</span>, <span>this</span>, <span>these</span>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4" class="category"><b>Other</b></td>
+        </tr>
+        <tr>
+            <td class="regex center">(<text>&nbsp;</text>)</td>
+            <td>Treat a sequence as a group</td>
+            <td class="regex">(da){2}</td>
+            <td>data, tada, <span>dada</span></td>
+        </tr>
+        <tr>
+            <td class="regex center"><text>&nbsp;</text>|<text>&nbsp;</text></td>
+            <td>Separate 2 or more sequences as alternatives</td>
+            <td>
+                &bull; <span class="regex">one|two|three</span><br>
+                &bull; <span class="regex">(one|two) days?</span>
+            </td>
+            <td>
+                &bull; <span>one</span> dog, <span>two</span> cats, <span>three</span> mice<br>
+                &bull; Stay <span>one day</span> or <span>two days</span>.
+            </td>
+        </tr>
+        <tr>
+            <td class="regex center">\<text>&nbsp;</text></td>
+            <td>
+                Escape a metacharacter so it is treated literally<br><br>
+                <b>Note:</b> The backslash itself also needs to be escaped to be treated literally.
+            </td>
+            <td>
+                &bull; <span class="regex">1.5</span><br>
+                &bull; <span class="regex">1\.5</span><br>
+                &bull; <span class="regex">C:\\Documents</span>
+            </td>
+            <td>
+                &bull; <span>1-5</span>, <span>1.5</span>, <span>1a5</span><br>
+                &bull; 1-5, <span>1.5</span>, 1a5<br>
+                &bull; <span>C:\Documents</span>\test.txt
+            </td>
+        </tr>
+    </table>
+    <br>
+</body>
+</html>

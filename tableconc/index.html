@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>TableConc</title>
+    <meta name="description" content="TableConc is a concordance search tool for tabular data." />
+    <meta name="author" content="Herman Leung" />
+    <meta name="copyright" content="&copy; 2021 Herman Leung" />
+    <meta name="keywords" content="concordance, concordancer" />
+    <meta name="url" content="https://github.com/ermanh/tableconc" />
+    
+    <link rel="icon" type="image/png" href="./favicons/16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="./favicons/32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="./favicons/96x96.png" sizes="96x96">
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="sticky-div">
+        <div id="banner">
+            <div id="help-container" class="controls-infotip">
+                <svg id="help-question-mark">
+                    <circle cx="12" cy="12" r="10" />
+                    <circle cx="12" cy="17" r="0.5" />
+                    <path d="M12,14 L12,12 A 3,3 90 1 0 9,9" />
+                </svg>
+                <div class="menu-infotiptext">
+                    <a href="./regex.html" target="popup" onclick="window.open('./regex.html', 'popup', 'width=1000,height=600')">
+                        Regular expressions
+                    </a>
+                    <a onclick="document.getElementById('modal-about').style.display = 'block';">About</a>
+                </div>
+            </div>
+            <div id="light-container" class="controls-infotip">
+                <svg id="light-control" class="light-dark-controls is-light">
+                    <circle cx="12" cy="12" r="5" />
+                    <path d="M12,2 L12,4 M12,22 L12,20  M2,12 L4,12 M22,12 L20,12
+                             M7,7 L5,5 M17,17 L19,19    M17,7 L19,5 M7,17 L5,19" />
+                </svg>
+                <span class="controls-infotiptext">
+                    Light mode
+                </span>
+            </div>
+            <div id="dark-container" class="controls-infotip">
+                <svg id="dark-control" class="light-dark-controls is-light">
+                    <path d="M7,5 C 23,1 23,23 7,19 C 15,19 15,5 7,5" />
+                </svg>
+                <span class="controls-infotiptext">
+                    Dark mode
+                </span>
+            </div>
+            <div class="control-container controls-infotip">
+                <svg id="hide-controls">
+                    <circle cx="10" cy="10" r="5" />
+                    <path d="M19,19 L13,13" />
+                </svg>
+                <span class="controls-infotiptext">
+                    Show/hide search
+                </span>
+            </div>
+            <div class="control-container controls-infotip">
+                <svg id="hide-column-controls">
+                    <rect x="5" y="5" width="7" height="14" />
+                    <rect x="12" y="5" width="7" height="14" />
+                </svg>
+                <span class="controls-infotiptext">
+                    Show/hide column selection
+                </span>
+            </div>
+            &nbsp;&nbsp;
+            <div id="file-div">
+                <input id="choose-file" type="file" accept=".csv,.tsv,.txt,.json" style="width:200px;">
+                &nbsp;&nbsp;
+                <input id="column-headers" type="checkbox" checked>
+                <label id="column-headers-label" for="column-headers">Contains headers</label>
+            </div>
+        </div>
+        <div id="controls">
+            <form id="search-box" onsubmit="return false;">
+                <table>
+                    <tr>
+                        <td class="controls-infotip">
+                            <svg id="second-search-hider" height="12" width="12">
+                                <path d="M1,6 L11,6 M6,1 L6,11" />
+                            </svg>
+                            <svg id="third-search-hider" height="12" width="12">
+                                <path d="M1,6 L11,6 M6,1 L6,11" />
+                            </svg>
+                            <span class="controls-infotiptext-2">
+                                Additional search fields
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table>
+                                <tr style="height: 5px;">
+                                    <td colspan="6">
+                                        <label for="column-selection-1">Search column:</label>   
+                                        <select name="column-selection-1" id="column-selection-1"></select>
+                                        &nbsp;
+                                        <input id="filter-control-1" type="checkbox">
+                                        <label id="filter-control-label-1" for="filter-control-1">Filter by value&nbsp;</label>
+                                        <span id="filter-min-span-1">
+                                            <label for="filter-min-1" id="filter-min-label-1">&nbsp;Min: </label>
+                                            <input id="filter-min-1" type="number" value="2" min="1">&nbsp;
+                                        </span>
+                                        <span id="filter-row-1"><select name="filter-selection-1" id="filter-selection-1"></select></span>
+                                    </td>
+                                </tr>
+                                <tr id="search-row-1">
+                                    <td style="vertical-align: top;">
+                                        <input id="search-input-1" class="search" type="search" placeholder="Search..." disabled>
+                                    </td>
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <input id="full-words-1" type="checkbox" checked disabled>
+                                                    <label id="full-words-label-1" for="full-words-1">
+                                                        Full&nbsp;words
+                                                        <div class="infotip">
+                                                            &nbsp;i&nbsp;
+                                                            <span class="infotiptext">
+                                                                If selected, searching "tab" won't match "tabs" or "stable"
+                                                            </span>
+                                                        </div>
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <select name="match-where-1" id="match-where-1" disabled>
+                                                        <option value="match-anywhere-1" id="match-anywhere-1">Match anywhere</option>
+                                                        <option value="match-entire-1" id="match-entire-1">Full match</option>
+                                                        <option value="match-beginning-1" id="match-beginning-1">Match beginning</option>
+                                                        <option value="match-end-1" id="match-end-1">Match end</option>
+                                                    </select>
+                                                </td>
+                                                <td style="width:190px;">
+                                                    <input id="concordance-display-1" type="checkbox" checked disabled>
+                                                    <label for="concordance-display-1">Concordance</label>
+                                                    <input class="cutoff" id="concordance-cutoff-1" type="number" value="50" disabled>
+                                                    <div class="infotip">
+                                                        &nbsp;i&nbsp;
+                                                        <span class="infotiptext">
+                                                            Sets the maximum number of characters displayed on each side
+                                                            of the matched pattern
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td style="width: 12px;">
+                                                    <div id="picker-div-1" class="picker-div">
+                                                        <input id="picker-1" type="color" value="#ff0000" disabled>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input id="regex-1" type="checkbox" disabled>
+                                                    <label id="regex-label-1" for="regex-1">Regular&nbsp;expression</label>
+                                                </td>
+                                                <td>
+                                                    <input id="case-sensitive-1" type="checkbox" disabled>
+                                                    <label for="case-sensitive-1">Case-sensitive</label>
+                                                </td>
+                                                <td>
+                                                    <input id="findall-1" type="checkbox" disabled>
+                                                    <label for="findall-1">Find&nbsp;all&nbsp;instances</label>
+                                                </td>
+                                                <td>
+                                                    <div id="bg-picker-div-1" class="picker-div">
+                                                        <input id="bg-picker-1" type="color" value="#fcdad8" disabled>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table id="second-search">
+                                <tr style="height: 5px;">
+                                    <td colspan="5">
+                                        <label for="column-selection-2">Search column:</label>
+                                        <select name="column-selection-2" id="column-selection-2"></select>
+                                        &nbsp;
+                                        <input id="filter-control-2" type="checkbox">
+                                        <label id="filter-control-label-2" for="filter-control-2">Filter by value&nbsp;</label>
+                                        <span id="filter-min-span-2">
+                                            <label for="filter-min-2" id="filter-min-label-2">&nbsp;Min: </label>
+                                            <input id="filter-min-2" type="number" value="2" min="1">&nbsp;
+                                        </span>
+                                        <span id="filter-row-2"><select name="filter-selection-2" id="filter-selection-2"></select></span>
+                                    </td>
+                                </tr>
+                                <tr id="search-row-2">
+                                    <td style="vertical-align: top;" rowspan="2">
+                                        <input id="search-input-2" class="search" type="search" placeholder="Search..." disabled>
+                                    </td>
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <input id="full-words-2" type="checkbox" checked disabled>
+                                                    <label id="full-words-label-2" for="full-words-2">
+                                                        Full&nbsp;words
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <select name="match-where-2" id="match-where-2" disabled>
+                                                        <option value="match-anywhere-2" id="match-anywhere-2">Match anywhere</option>
+                                                        <option value="match-entire-2" id="match-entire-2">Full match</option>
+                                                        <option value="match-beginning-2" id="match-beginning-2">Match beginning</option>
+                                                        <option value="match-end-2" id="match-end-2">Match end</option>
+                                                    </select>
+                                                </td>
+                                                <td style="width:190px;">
+                                                    <input id="concordance-display-2" type="checkbox" checked disabled>
+                                                    <label for="concordance-display-2">Concordance</label>
+                                                    <input class="cutoff" id="concordance-cutoff-2" type="number" value="50" disabled>
+                                                </td>
+                                                <td style="width: 12px;">
+                                                    <div id="picker-div-2" class="picker-div">
+                                                        <input id="picker-2" type="color" value="#0c5eec" disabled>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input id="regex-2" type="checkbox" disabled>
+                                                    <label id="regex-label-2" for="regex-2">Regular&nbsp;expression</label>
+                                                </td>
+                                                <td>
+                                                    <input id="case-sensitive-2" type="checkbox" disabled>
+                                                    <label for="case-sensitive-2">Case-sensitive</label>
+                                                </td>
+                                                <td>
+                                                    <input id="findall-2" type="checkbox" disabled>
+                                                    <label for="findall-2">Find&nbsp;all&nbsp;instances</label>
+                                                </td>
+                                                <td>
+                                                    <div id="bg-picker-div-2" class="picker-div">
+                                                        <input id="bg-picker-2" type="color" value="#d3e2fa" disabled>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table> 
+                                    </td>
+                                </tr>
+                            </table>
+                            <table id="third-search">
+                                <tr style="height: 5px;">
+                                    <td colspan="5">
+                                        <label for="column-selection-3">Search column:</label>
+                                        <select name="column-selection-3" id="column-selection-3"></select>
+                                        &nbsp;
+                                        <input id="filter-control-3" type="checkbox">
+                                        <label id="filter-control-label-3" for="filter-control-3">Filter by value&nbsp;</label>
+                                        <span id="filter-min-span-3">
+                                            <label for="filter-min-3" id="filter-min-label-3">&nbsp;Min: </label>
+                                            <input id="filter-min-3" type="number" value="2" min="1">&nbsp;
+                                        </span>
+                                        <span id="filter-row-3"><select name="filter-selection-3" id="filter-selection-3"></select></span>
+                                    </td>
+                                </tr>
+                                <tr id="search-row-3">
+                                    <td style="vertical-align: top;" rowspan="2">
+                                        <input id="search-input-3" class="search" type="search" placeholder="Search..." disabled>
+                                    </td>
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <input id="full-words-3" type="checkbox" checked disabled>
+                                                    <label id="full-words-label-3" for="full-words-3">
+                                                        Full&nbsp;words
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <select name="match-where-3" id="match-where-3" disabled>
+                                                        <option value="match-anywhere-3" id="match-anywhere-3">Match anywhere</option>
+                                                        <option value="match-entire-3" id="match-entire-3">Full match</option>
+                                                        <option value="match-beginning-3" id="match-beginning-3">Match beginning</option>
+                                                        <option value="match-end-3" id="match-end-3">Match end</option>
+                                                    </select>
+                                                </td>
+                                                <td style="width:190px;">
+                                                    <input id="concordance-display-3" type="checkbox" checked disabled>
+                                                    <label for="concordance-display-3">Concordance</label>
+                                                    <input class="cutoff" id="concordance-cutoff-3" type="number" value="50" disabled>
+                                                </td>
+                                                <td style="width: 12px;">
+                                                    <div id="picker-div-3" class="picker-div">
+                                                        <input id="picker-3" type="color" value="#008000" disabled>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input id="regex-3" type="checkbox" disabled>
+                                                    <label id="regex-label-3" for="regex-3">Regular&nbsp;expression</label>
+                                                </td>
+                                                <td>
+                                                    <input id="case-sensitive-3" type="checkbox" disabled>
+                                                    <label for="case-sensitive-3">Case-sensitive</label>
+                                                </td>
+                                                <td>
+                                                    <input id="findall-3" type="checkbox" disabled>
+                                                    <label for="findall-3">Find&nbsp;all&nbsp;instances</label>
+                                                </td>
+                                                <td>
+                                                    <div id="bg-picker-div-3" class="picker-div">
+                                                        <input id="bg-picker-3" type="color" value="#e0edd3" disabled>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left:5px;">
+                            <button id="search-button" disabled>Search</button>
+                            <button id="reset-button" onclick="resetSearch(); return false;" disabled>Reset</button>
+                        </td>
+                    </tr>
+                </table>            
+            </form>
+        </div>
+        <div id="columnselect">
+            Display columns:&nbsp;&nbsp;
+            <text id="columns-to-show"></text>
+        </div>
+    </div>
+    <div id="results">
+        <div id="results-header">
+            <label id="showing-start-label" for="showing-start">Showing:&nbsp;</label>
+            <button id="very-start" disabled>&lt;&lt;</button>
+            <button id="previous-page" disabled>&lt;</button>&nbsp;
+            <span id="showing">
+                <input id="showing-start" type="number" value="1" min="1">
+                to&nbsp;
+                <span id="showing-end"></span>
+                &nbsp;of&nbsp;
+                <span id="results-total"></span>
+            </span>&nbsp;
+            <button id="next-page" disabled>&gt;</button>
+            <button id="very-end" disabled>&gt;&gt;</button>
+            &nbsp;&nbsp;
+            <label id="show-rows-label" for="show-rows">Rows per page:</label>
+            <input id="show-rows" type="number" value="25" min="1">
+            &nbsp;&nbsp;&nbsp;
+            <span id="results-none"></span>
+        </div>
+        <table id="results-table">
+        </table>
+    </div>
+    <div id="modal-about" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="document.getElementById('modal-about').style.display = 'none';">&times;</span>
+            <h1 style="text-align:center;">TableConc</h1>
+            <p>
+                TableConc is a concordance search tool for tabular data.              
+                The following file formats are supported:
+            </p>
+            <table style="margin: 0 0 0 20px;">
+                <tr>
+                    <td>.csv</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>.tsv</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>.txt</td>
+                    <td>(entire file treated as a single column)</td>
+                </tr>
+                <tr>
+                    <td style="vertical-align:top;">.json</td>
+                    <td>(must contain only one array of objects)</td>
+                </tr>
+            </table>
+            <p>
+                You can configure search conditions on up to 3 different columns, 
+                filter a column by its values, 
+                customize the concordance display, 
+                sort by original index and relative word position,
+                and more.
+            </p>
+            <p>This project is maintained on 
+                <a href="https://github.com/ermanh/tableconc/" 
+                   style="color: #0c5eec; text-decoration: underline;">
+                GitHub</a>.
+            </p>
+            <p>&copy; 2021 Herman Leung</p>
+        </div>
+    </div>
+
+    <script src="./d3/d3-selection/d3-selection.min.js" charset="utf-8"></script>
+    <script src="./d3/d3-dsv/d3-dsv.min.js" charset="utf-8"></script>
+
+    <script src="./scripts/constants.js" charset="utf-8"></script>
+    <script src="./scripts/helpers.js" charset="utf-8"></script>
+    <script src="./scripts/filehandler.js" charset="utf-8"></script>
+    <script src="./scripts/listeners.js" charset="utf-8"></script>
+    <script src="./scripts/search.js" charset="utf-8"></script>
+</body>
+</html>
