@@ -426,7 +426,7 @@ function resetSearch() {
     ["1", "2", "3"].forEach((i) => {
         document.getElementById(`column-selection-${i}`).value = "(none)";
         document.getElementById(`filter-control-${i}`).checked = false;
-        document.getElementById(`filter-min-${i}`).style.display = "none";
+        document.getElementById(`filter-min-span-${i}`).style.display = "none";
         document.getElementById(`filter-min-${i}`).value = "2";
         document.getElementById(`filter-row-${i}`).style.display = "none";
         document.getElementById(`filter-selection-${i}`).innerHTML = "";
