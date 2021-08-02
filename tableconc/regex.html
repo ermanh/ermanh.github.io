@@ -162,9 +162,9 @@
             <td colspan="4" class="category"><b>Other</b></td>
         </tr>
         <tr>
-            <td class="regex center">(<text>&nbsp;</text>)</td>
-            <td>Treat a sequence as a group</td>
-            <td class="regex">(da){2}</td>
+            <td class="regex center">(?:<text>&nbsp;</text>)</td>
+            <td>Treat a sequence as a (non-capturing) group</td>
+            <td class="regex">(?:da){2}</td>
             <td>data, tada, <span>dada</span></td>
         </tr>
         <tr>
@@ -172,7 +172,7 @@
             <td>Separate 2 or more sequences as alternatives</td>
             <td>
                 &bull; <span class="regex">one|two|three</span><br>
-                &bull; <span class="regex">(one|two) days?</span>
+                &bull; <span class="regex">(?:one|two) days?</span>
             </td>
             <td>
                 &bull; <span>one</span> dog, <span>two</span> cats, <span>three</span> mice<br>

@@ -78,16 +78,21 @@
             <form id="search-box" onsubmit="return false;">
                 <table>
                     <tr>
-                        <td class="controls-infotip">
-                            <svg id="second-search-hider" height="12" width="12">
-                                <path d="M1,6 L11,6 M6,1 L6,11" />
-                            </svg>
-                            <svg id="third-search-hider" height="12" width="12">
-                                <path d="M1,6 L11,6 M6,1 L6,11" />
-                            </svg>
-                            <span class="controls-infotiptext-2">
-                                Additional search fields
+                        <td>
+                            <span class="controls-infotip">
+                                <svg id="second-search-hider" height="12" width="12">
+                                    <path d="M1,6 L11,6 M6,1 L6,11" />
+                                </svg>
+                                <svg id="third-search-hider" height="12" width="12">
+                                    <path d="M1,6 L11,6 M6,1 L6,11" />
+                                </svg>
+                                <span class="controls-infotiptext-2">
+                                    Additional search fields
+                                </span>
                             </span>
+                            &nbsp;&nbsp;
+                            <button id="search-button" disabled>Search</button>&nbsp;
+                            <button id="reset-button" onclick="resetSearch(); return false;" disabled>Reset</button>
                         </td>
                     </tr>
                     <tr>
@@ -315,12 +320,6 @@
                                     </td>
                                 </tr>
                             </table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="padding-left:5px;">
-                            <button id="search-button" disabled>Search</button>
-                            <button id="reset-button" onclick="resetSearch(); return false;" disabled>Reset</button>
                         </td>
                     </tr>
                 </table>            
