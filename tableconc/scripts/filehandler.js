@@ -90,7 +90,12 @@ function readFile() {
     filetype = fileInput.files[0].type;
     reader.onload = () => {    
         resetSearch();
-        if (filetype == "text/csv") {
+        let csvTypes = [
+            "text/csv", 
+            "application/vnd.ms-excel",
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        ];
+        if (csvTypes.includes(filetype)) {
             data = d3.csvParseRows(reader.result);
         } else if (filetype == "text/tab-separated-values") {
             data = d3.tsvParseRows(reader.result);
